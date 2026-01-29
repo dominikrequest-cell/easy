@@ -1,0 +1,36 @@
+services:
+  # BloxStake API Web Service
+  - type: web
+    name: bloxstake-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn api:app
+    envVars:
+      - key: API_KEY
+        generateValue: true
+      - key: SECURITY_KEY
+        generateValue: true
+      - key: PORT
+        value: 10000
+    healthCheckPath: /
+
+  # BloxStake Discord Bot (Background Worker)
+  - type: worker
+    name: bloxstake-discord-bot
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python discord_bot.py
+    envVars:
+      - key: BOT_TOKEN
+        sync: false  # Manually set this
+      - key: API_KEY
+        generateValue: true
+      - key: SECURITY_KEY
+        generateValue: true
+
+databases:
+  # SQLite will be used locally, but you can add PostgreSQL here
+  # - name: bloxstake-db
+  #   plan: free
