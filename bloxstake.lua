@@ -1,4 +1,4 @@
-local api = "https://api.mm2stash.com/api/mm2/"
+local api = "https://api.bloxstake.com/api/mm2/"  -- Update with your BloxStake API endpoint
 local Bot, You = game.Players.LocalPlayer, game.Players.LocalPlayer
 
 local Players = game:GetService("Players")
@@ -22,7 +22,7 @@ local currentTraderRandomized
 local currentDepo = {}
 local currentWithdraw = {}
 
-local API_KEY = "0e1baef9c519f9716fb75d14da70ed78"
+local API_KEY = "YOUR_API_KEY_HERE"  -- Replace with your actual API key
 
 game:GetService("RunService"):Set3dRenderingEnabled(false)
 
@@ -59,7 +59,7 @@ local ReceivingRequest = You.PlayerGui:WaitForChild("MainGUI").Game.Leaderboard.
 --Functions
 local function pingBotStatus()
     local botName = game.Players.LocalPlayer.Name
-    local url = "https://api.mm2stash.com/api/mm2/"
+    local url = "https://api.bloxstake.com/api/mm2/"
     
     while true do
         pcall(function()
@@ -208,7 +208,7 @@ local function logWithdraw(PlayerName)
         Data = {
             UserId = PlayerName,
             robloxId = game.Players:GetUserIdFromNameAsync(PlayerName),
-            SecurityKey = "0e1baef9c519f9716fb75d14da70ed78"
+            SecurityKey = API_KEY
         },
         key = API_KEY
     })
@@ -352,7 +352,7 @@ AcceptTrade.OnClientEvent:Connect(function(complete, items_)
                 local BodyTable = {}
                 BodyTable["key"] = API_KEY
                 BodyTable["Data"] = {UserId = tostring(traderId), items = {}}
-                BodyTable["SecurityKey"] = "0e1baef9c519f9716fb75d14da70ed78"
+                BodyTable["SecurityKey"] = API_KEY
         
                 for i, v in pairs(currentDepo) do
                     table.insert(BodyTable["Data"]["items"], {
@@ -385,7 +385,7 @@ AcceptTrade.OnClientEvent:Connect(function(complete, items_)
 
             local BodyTable = {}
             BodyTable["Data"] = {UserId = tostring(traderId)}
-            BodyTable["SecurityKey"] = "0e1baef9c519f9716fb75d14da70ed78"
+            BodyTable["SecurityKey"] = API_KEY
 
             local jsonBody = HttpService:JSONEncode(BodyTable)
             print("JSON Body: ", jsonBody)
